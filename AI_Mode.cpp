@@ -1,18 +1,20 @@
-#include "Class.h"
+#include "AI_Mode.h"
 
-std::string ai_last_two;
-bool is_the_value_invalid = false;
+std::string AI::ai_last_two;
+bool AI::is_the_value_invalid = false;
 
 std::string USER::get_user_input()
 {
+	bool is_the_value_invalid = false;
+
 	std::string user_input;
 
 	std::cout << "Tvoj red: ";
 	std::cin >> user_input;
 
-	if (!if_last_two_chars)
+	if (!flag)
 	{
-		if_last_two_chars = true;
+		flag = true;
 	}
 	else
 	{
@@ -21,13 +23,15 @@ std::string USER::get_user_input()
 		user_first_two = user_input.at(0);
 		user_first_two += user_input.at(1);
 
-		if(ai_last_two == user_first_two)
+		if(AI::ai_last_two == user_first_two)
 		{ }
 		else
 		{
 			is_the_value_invalid = true;
 		}
 	}
+
+	AI::is_the_value_invalid = is_the_value_invalid;
 
 	return (user_input);
 }
@@ -39,8 +43,10 @@ void AI::get_ai_output(const std::string& ai_output) const
 	Sleep(2000);
 }
 
-std::string AI::get_ai_calculation(const std::string& user_input)
+std::string AI::ai_calculation(const std::string& user_input)
 {
+	
+
 	file.open("AI.txt", std::ifstream::in);
 
 	if (AI::file.is_open())
@@ -106,10 +112,10 @@ std::string AI::get_ai_calculation(const std::string& user_input)
 		return("Pobedio si! :(");
 	}
 
-	ai_last_two = chosen_word.at(chosen_word.size() - 2);
-	ai_last_two += chosen_word.at(chosen_word.size() - 1);
+	AI::ai_last_two = chosen_word.at(chosen_word.size() - 2);
+	AI::ai_last_two += chosen_word.at(chosen_word.size() - 1);
 
-	if (is_the_value_invalid)
+	if (AI::is_the_value_invalid == true)
 	{
 		return("Pobedio sam!:D Uneo / la si pogresan pocetak!");
 	}

@@ -14,12 +14,16 @@ class AI final
 {
 private:
 	/*------Variable Declaration------*/
+	
 	std::ifstream file; 
 	std::vector<std::string> words_from_the_file;
 	std::string last_two_chars;
 	
 public:
-	std::string get_ai_calculation(const std::string&);
+	static bool is_the_value_invalid;
+	static std::string ai_last_two;
+
+	std::string ai_calculation(const std::string&);
 	void get_ai_output(const std::string&) const;
 };
 
@@ -27,11 +31,11 @@ public:
 class USER final
 {
 private:
-	bool if_last_two_chars;
+	bool flag;
 
 public:
 	std::string get_user_input();
 	USER()
-		: if_last_two_chars(false)
+		: flag(false)
 	{}
 };
