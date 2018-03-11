@@ -1,32 +1,32 @@
 #include <iostream>
 #include <string>
 
-class Player1 final
+class Igrac1 final
 {
 private:
-	std::string player1_input_string;
+	std::string igrac1_ulaz_string;
 
 public:
-	std::string get_player1_input() const;
-	std::string get_winner(std::string&, std::string&);
-
-	static std::string player2_last_two;
-	static std::string player1_last_two;
-	static std::string player2_first_two;
-	static std::string player1_first_two;
-
+	std::string get_igrac1_ulaz() const;
+	std::string get_pobednik(std::string&, std::string&);
+	
+	static std::string igrac1_prva_dva;
+	static std::string igrac1_poslednja_dva;
 };
 
-class Player2 final
+class Igrac2 final
 { 
 private:
-	std::string player2_input_string;
+	std::string igrac2_ulaz_string;
 
 public:
 	static bool flag;
-	static bool not_the_first_time;
-	static bool wrong_beginning;
+	static bool prvi_put;
+	static bool los_pocetak;
 	static bool kaladont;
-	std::string get_player2_input() const;
+
+	static std::string igrac2_prva_dva;
+	static std::string igrac2_poslednja_dva;
+	std::string get_igrac2_ulaz() const;
 
 };

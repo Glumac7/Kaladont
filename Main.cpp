@@ -5,40 +5,40 @@
 /*------Main Function------*/
 int main() 
 {
-	int game_mode;
+	int mod;
 
 	std::cout << "Dobro dosli u KALADONT!\nIzaberite mode za igramnje\n\n1) PVP\n2) AI\n\n: ";
-	std::cin >> game_mode;
+	std::cin >> mod;
 
-	if (game_mode == 1)
+	if (mod == 1)
 	{
 		system("cls");
 		std::cout << "Dobro dosli u PVP mode!\n\n";
 
-		Player1 player1;
-		Player2 player2;
+		Igrac1 igrac1;
+		Igrac2 player2;
 
-		char end = 's';
+		char kraj = 's';
 		do
 		{
-			std::string player1_input = player1.get_player1_input();
-			std::string player2_input = player2.get_player2_input();
+			std::string igrac1_ulaz = igrac1.get_igrac1_ulaz();
+			std::string player2_ulaz = player2.get_igrac2_ulaz();
 
-			std::string get_winner = player1.get_winner(player1_input, player2_input);
+			std::string get_pobednik = igrac1.get_pobednik(igrac1_ulaz, player2_ulaz);
 
-			if (get_winner == "Igrac 2 je pobedio!" || get_winner == "Igrac 1 je pobedio! Igrac 2 je uneo / la los pocetak." || get_winner == "Igrac 1 je pobedio!" || get_winner == "Igrac 2 je pobedio! Igrac 1 je uneo / la los pocetak.")
+			if (get_pobednik == "Igrac 2 je pobedio!" || get_pobednik == "Igrac 1 je pobedio! Igrac 2 je uneo / la los pocetak." || get_pobednik == "Igrac 1 je pobedio!" || get_pobednik == "Igrac 2 je pobedio! Igrac 1 je uneo / la los pocetak.")
 			{
-				std::cout << get_winner << "\n";
-				end = 'n';
+				std::cout << get_pobednik << "\n";
+				kraj = 'n';
 			}
 
-		} while (end != 'n');
+		} while (kraj != 'n');
 
 		system("pause");
 		return 0;
 	}
 
-	if (game_mode == 2)
+	if (mod == 2)
 	{
 		system("cls");
 		std::cout << "Dobro dosli u AI mode!\n\n";
@@ -46,20 +46,20 @@ int main()
 		AI ai;
 		USER user;
 
-		char end = 's';
+		char kraj = 's';
 		do
 		{
-			std::string user_input = user.get_user_input();
-			std::string ai_calculation_return = ai.ai_calculation(user_input);
+			std::string user_ulaz = user.get_ulaz_korisnika();
+			std::string ai_calculation_return = ai.ai_kalkulacija(user_ulaz);
 
-			ai.get_ai_output(ai_calculation_return);
+			ai.get_ai_izlaz(ai_calculation_return);
 
 			if (ai_calculation_return == "Pobedio si! :( Ne znam rec!" || ai_calculation_return == "Pobedio si! :(" || ai_calculation_return == "Pobedio sam! :D" || ai_calculation_return == "Pobedio sam!:D Uneo / la si pogresan pocetak!")
 			{
-				end = 'n';
+				kraj = 'n';
 			}
 
-		} while (end != 'n');
+		} while (kraj != 'n');
 
 		return 0;
 	}

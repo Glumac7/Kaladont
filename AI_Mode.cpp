@@ -1,16 +1,16 @@
 #include "AI_Mode.h"
 
-std::string AI::ai_last_two;
-bool AI::is_the_value_invalid = false;
+std::string AI::ai_poslednja_dva_karaktera;
+bool AI::da_li_je_vrednost_validna = false;
 
-std::string USER::get_user_input()
+std::string USER::get_ulaz_korisnika()
 {
-	bool is_the_value_invalid = false;
+	bool da_li_je_vrednost_validna = false;
 
-	std::string user_input;
+	std::string ulaz_korisnika;
 
 	std::cout << "Tvoj red: ";
-	std::cin >> user_input;
+	std::cin >> ulaz_korisnika;
 
 	if (!flag)
 	{
@@ -20,105 +20,100 @@ std::string USER::get_user_input()
 	{
 		std::string user_first_two;
 
-		user_first_two = user_input.at(0);
-		user_first_two += user_input.at(1);
+		user_first_two = ulaz_korisnika.at(0);
+		user_first_two += ulaz_korisnika.at(1);
 
-		if(AI::ai_last_two == user_first_two)
+		if(AI::ai_poslednja_dva_karaktera == user_first_two)
 		{ }
 		else
 		{
-			is_the_value_invalid = true;
+			da_li_je_vrednost_validna = true;
 		}
 	}
 
-	AI::is_the_value_invalid = is_the_value_invalid;
+	AI::da_li_je_vrednost_validna = da_li_je_vrednost_validna;
 
-	return (user_input);
+	return (ulaz_korisnika);
 }
 
-void AI::get_ai_output(const std::string& ai_output) const
+void AI::get_ai_izlaz(const std::string& ai_izlaz) const
 {
-	std::cout << "AI kaze: " << ai_output << std::endl;
+	std::cout << "AI kaze: " << ai_izlaz << std::endl;
 
 	Sleep(2000);
 }
 
-std::string AI::ai_calculation(const std::string& user_input)
+std::string AI::ai_kalkulacija(const std::string& ulaz_korisnika)
 {
-	
+	tekst_fajl.open("AI.txt", std::ifstream::in);
 
-	file.open("AI.txt", std::ifstream::in);
-
-	if (AI::file.is_open())
+	if (AI::tekst_fajl.is_open())
 	{
-		last_two_chars = user_input.at(user_input.size() - 2);
-		last_two_chars += user_input.at(user_input.size() - 1);
+		poslednja_dva_karaktera = ulaz_korisnika.at(ulaz_korisnika.size() - 2);
+		poslednja_dva_karaktera += ulaz_korisnika.at(ulaz_korisnika.size() - 1);
 
-		if (last_two_chars == "ka")
+		if (poslednja_dva_karaktera == "ka")
 		{
 			return("Pobedio sam! :D");
 		}
 
-		std::string file_string;
+		std::string rec_iz_fajla;
 
-		while (file >> file_string)
+		while (tekst_fajl >> rec_iz_fajla)
 		{
-			words_from_the_file.push_back(file_string);
+			vector_reci_iz_fajla.push_back(rec_iz_fajla);
 		}
-		file.close();
+		tekst_fajl.close();
 	}
-
 	
-	std::vector<std::string> chosen_words;
+	std::vector<std::string> izabrane_reci;
 	unsigned int i;
-	int counter = 0;
+	int brojac = 0;
 
-	for (i = 0; i != words_from_the_file.size() - 1; i++)
+	for (i = 0; i != vector_reci_iz_fajla.size() - 1; i++)
 	{
+		std::string rec_iz_fajla = vector_reci_iz_fajla.at(i);
 
-		std::string a_word_form_the_file = words_from_the_file.at(i);
-
-		if (a_word_form_the_file.size() >= 2)
+		if (rec_iz_fajla.size() >= 2)
 		{
-			if (a_word_form_the_file.at(0) == last_two_chars.at(0) && a_word_form_the_file.at(1) == last_two_chars.at(1))
+			if (rec_iz_fajla.at(0) == poslednja_dva_karaktera.at(0) && rec_iz_fajla.at(1) == poslednja_dva_karaktera.at(1))
 			{
-				chosen_words.push_back(a_word_form_the_file);
+				izabrane_reci.push_back(rec_iz_fajla);
 			}
 			else
 			{
-				counter++;
+				brojac++;
 			}
-			
 		}
 		else
 		{
-			counter++;
+			brojac++;
 		}
 
 		srand(time(NULL));
 	}
 	
-	if (i == counter)
+	if (i == brojac)
 	{
 		return("Pobedio si! :( Ne znam rec!");
 	}
 
-	std::string chosen_word = chosen_words.at(rand() % chosen_words.size());
+	std::string izabrana_rec = izabrane_reci.at(rand() % izabrane_reci.size());
 
-	if ((chosen_word.at(chosen_word.size() - 2) == 'k') && (chosen_word.at(chosen_word.size() - 1) == 'a'))
+	if ((izabrana_rec.at(izabrana_rec.size() - 2) == 'k') && (izabrana_rec.at(izabrana_rec.size() - 1) == 'a'))
 	{
-		AI::get_ai_output(chosen_word);
+		AI::get_ai_izlaz(izabrana_rec);
 		
 		return("Pobedio si! :(");
 	}
 
-	AI::ai_last_two = chosen_word.at(chosen_word.size() - 2);
-	AI::ai_last_two += chosen_word.at(chosen_word.size() - 1);
+	AI::ai_poslednja_dva_karaktera = izabrana_rec.at(izabrana_rec.size() - 2);
+	AI::ai_poslednja_dva_karaktera += izabrana_rec.at(izabrana_rec.size() - 1);
 
-	if (AI::is_the_value_invalid == true)
+	if (AI::da_li_je_vrednost_validna == true)
 	{
 		return("Pobedio sam!:D Uneo / la si pogresan pocetak!");
 	}
 
-	return(chosen_word);
+	return(izabrana_rec);
 }

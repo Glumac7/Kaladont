@@ -1,90 +1,140 @@
 #include "PVP_Mode.h"
 
-bool Player2::not_the_first_time = false;
-bool Player2::wrong_beginning = false;
-bool Player2::flag = false;
-bool Player2::kaladont = false;
+#define Define_igrac1_prva_dva Igrac1::igrac1_prva_dva = igrac1_ulaz.at(0);Igrac1::igrac1_prva_dva += igrac1_ulaz.at(1);
+#define Define_igrac1_poslednja_dva Igrac1::igrac1_poslednja_dva = igrac1_ulaz.at(igrac1_ulaz.size() - 2); Igrac1::igrac1_poslednja_dva += igrac1_ulaz.at(igrac1_ulaz.size() - 1);
 
-std::string Player1::player1_first_two = "";
-std::string Player1::player2_last_two = "";
-std::string Player1::player1_last_two = "";
-std::string Player1::player2_first_two = "";
+#define	Define_igrac2_prva_dva Igrac2::igrac2_prva_dva = igrac2_ulaz.at(0);Igrac2::igrac2_prva_dva += igrac2_ulaz.at(1);
+#define Define_igrac2_poslednja_dva Igrac2::igrac2_poslednja_dva = igrac2_ulaz.at(igrac2_ulaz.size() - 2);Igrac2::igrac2_poslednja_dva += igrac2_ulaz.at(igrac2_ulaz.size() - 1);
 
 
-std::string Player1::get_player1_input() const
+bool Igrac2::prvi_put = true;
+bool Igrac2::los_pocetak = false;
+bool Igrac2::flag = false;
+bool Igrac2::kaladont = false;
+
+std::string Igrac1::igrac1_prva_dva = "";
+std::string Igrac2::igrac2_poslednja_dva = "";
+std::string Igrac1::igrac1_poslednja_dva = "";
+std::string Igrac2::igrac2_prva_dva = "";
+
+
+std::string Igrac1::get_igrac1_ulaz() const
 {
 	std::cout << "Igrac 1: ";
 
-	std::string player1;
+	std::string igrac1;
 
-	std::cin >> player1;
+	std::cin >> igrac1;
 
-	if (Player2::not_the_first_time)
+	if (!Igrac2::prvi_put)
 	{
-		std::string first;
-		first = player1.at(0);
-		first += player1.at(1);
+		std::string *prva_dva = new std::string;
 
-		if (first != Player1::player2_last_two)
-		{
-			Player2::wrong_beginning = true;
-		}
-		
-		first = player1.at(player1.size() - 2);
-		first += player1.at(player1.size() - 1);
+		*prva_dva = igrac1.at(0);
+		*prva_dva += igrac1.at(1);
 
-		if (first == "ka")
+		if (*prva_dva != Igrac2::igrac2_poslednja_dva)
 		{
-			Player2::kaladont = true;
+			Igrac2::los_pocetak = true;
 		}
 
+		delete prva_dva;
+
+		std::string poslednja_dva;
+
+		poslednja_dva = igrac1.at(igrac1.size() - 2);
+		poslednja_dva += igrac1.at(igrac1.size() - 1);
+
+		if (poslednja_dva == "ka")
+		{
+			Igrac2::kaladont = true;
+		}
 	}
 	else
 	{
-		Player2::not_the_first_time = true;
+		Igrac2::prvi_put = false;
 	}
 
-	return (player1);
+	return (igrac1);
 }
 
-std::string Player2::get_player2_input() const
+std::string Igrac2::get_igrac2_ulaz() const
 {
-	if (Player2::wrong_beginning)
+	if (Igrac2::los_pocetak)
 	{
 		return ("Igrac 2 je pobedio! Igrac 1 je uneo / la los pocetak.");
 	}
 
-	if (Player2::kaladont)
+	if (Igrac2::kaladont)
 	{
 		return ("Igrac 2 je pobedio!");
 	}
 
 	std::cout << "Igrac 2: ";
 
-	std::string player2;
+	std::string igrac2;
 
-	std::cin >> player2;
+	std::cin >> igrac2;
 
-	return (player2);
+	return (igrac2);
 }
 
-std::string Player1::get_winner(std::string& player1_input, std::string& player2_input)
+std::string Igrac1::get_pobednik(std::string& igrac1_ulaz, std::string& igrac2_ulaz)
 {
-	#include "Header.h"
-
-	if (!Player2::flag)
+	if (!Igrac2::flag)
 	{
-		Player2::flag = true;
+		Define_igrac1_poslednja_dva;
+
+		if (Igrac1::igrac1_poslednja_dva == "ka")
+		{ 
+			return("Igrac 2 je pobedio!"); 
+		}
+
+		Define_igrac2_prva_dva;
+
+		if (Igrac2::igrac2_prva_dva != Igrac1::igrac1_poslednja_dva) 
+		{ 
+			return("Igrac 1 je pobedio! Igrac 2 je uneo / la los pocetak."); 
+		}
+
+		Define_igrac2_poslednja_dva;
+
+		if (Igrac2::igrac2_poslednja_dva == "ka") 
+		{ 
+			return("Igrac 1 je pobedio!"); 
+		}
+	
+		Igrac2::flag = true;
 	}
 
 	else
 	{
-		Player1::player1_first_two = player1_input.at(0);
-		Player1::player1_first_two += player1_input.at(1);
+		Define_igrac1_prva_dva;
 
-		if (Player1::player2_last_two != Player1::player1_first_two)
+		if (Igrac2::igrac2_poslednja_dva != Igrac1::igrac1_prva_dva)
 		{
 			return("Igrac 2 je pobedio! Igrac 1 je uneo / la los pocetak.");
+		}
+
+		Define_igrac1_poslednja_dva;
+
+		if (Igrac1::igrac1_poslednja_dva == "ka")
+		{
+			return("Igrac 2 je pobedio!");
+		}
+
+		Define_igrac2_prva_dva;
+
+		if (Igrac2::igrac2_prva_dva != Igrac1::igrac1_poslednja_dva)
+		{
+			return("Igrac 1 je pobedio! Igrac 2 je uneo / la los pocetak.");
+		}
+
+		Define_igrac2_poslednja_dva;
+
+		if (Igrac2::igrac2_poslednja_dva == "ka")
+		{
+			return("Igrac 1 je pobedio!");
 		}
 	}
 	return ("");
