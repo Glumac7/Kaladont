@@ -61,6 +61,7 @@ int main()
 
 		} while (kraj != 'n');
 
+		system("pause");
 		return 0;
 	}
 	else

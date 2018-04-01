@@ -39,8 +39,6 @@ std::string USER::get_ulaz_korisnika()
 void AI::get_ai_izlaz(const std::string& ai_izlaz) const
 {
 	std::cout << "AI kaze: " << ai_izlaz << std::endl;
-
-	Sleep(2000);
 }
 
 std::string AI::ai_kalkulacija(const std::string& ulaz_korisnika)

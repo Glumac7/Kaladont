@@ -1,7 +1,1 @@
-﻿  Main.cpp
-  AI_Mode.cpp
-c:\users\nemanjag\desktop\projects\visual studio projects\kaladont\kaladont\ai_mode.cpp(93): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  PVP_Mode.cpp
-  Kaladont.vcxproj -> C:\Users\NemanjaG\Desktop\Projects\Visual Studio Projects\Kaladont\Debug\Kaladont.exe
+﻿  Kaladont.vcxproj -> C:\Users\necag\Desktop\Projects\GitHub\Kaladont\Debug\Kaladont.exe
